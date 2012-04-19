@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Down for everyone or just me ?</h1>
+    <form id="check" action="check">
+        <input name="url" placeholder="type site name and press enter" type="text" id="url">
+    </form>
+    <ul id="result"></ul>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        (function ($) {
+            $(function () {
+                $("#check").submit(function () {
+
+                    // dom manipulation
+                    var site_name = $('<span>')
+                            .addClass('site-name')
+                            .html($('#url').val());
+                    var site_status= $('<strong>')
+                            .addClass('site-status')
+                            .addClass('wait')
+                            .html('wait ...');
+                    $('<li>').
+                            append(site_name).
+                            append(site_status).
+                            appendTo('#result');
+
+                    // ajax request
+                    $.getJSON('check', { url : $('#url').val() }, function (response) {
+                        if (response == 200)
+                        {
+                            site_status
+                                    .html("it's just you.")
+                                    .removeClass('wait')
+                                    .addClass("just-you");
+                        }
+                        else {
+                            site_status
+                                    .html("for everyone !")
+                                    .removeClass('wait')
+                                    .addClass("for-everyone")
+                        }
+                    });
+
+                    // clear input
+                    $('#url').val('')
+                    $('#url').attr('placeholder','')
+
+                    // stop form submit
+                    return false;
+                })
+            })
+        })(window.jQuery)
+    </script>
+{% endblock %}

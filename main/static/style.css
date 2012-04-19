@@ -1,0 +1,62 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700&subset=latin,latin-ext);
+
+body {
+    font-family:'Ubuntu', sans-serif;
+    color: #212121;
+}
+
+#container {
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+}
+
+h1 {
+    margin: 50px 0px 5px 0px;
+}
+
+#check #url {
+    font-family:'Ubuntu', sans-serif;
+    font-size: 25px;
+    padding: 2px;
+    border: 2px solid #dedede;
+    width: 98%;
+    float:left;
+}
+
+#result {
+    font-size: 24px;
+    padding: 0px;
+    margin: 0px;
+}
+
+#result li {
+    list-style: none;
+    padding: 3px;
+    clear: both;
+    margin: 0px;
+}
+
+#result li .site-name {
+    float: left;
+}
+
+#result li .site-status {
+    float: right;
+    color: black;
+}
+
+.site-status.just-you {
+    background-color: #90ee90;
+}
+
+.site-status.for-everyone {
+    background-color: #ffb6c1;
+}
+
+.site-status.wait {
+    background-color: #ffa07a;
+}
+
+
+
