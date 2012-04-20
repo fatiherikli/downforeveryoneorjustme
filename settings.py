@@ -1,4 +1,5 @@
 # Django settings for downforeveryoneorjustme project.
+from utils import here
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -102,7 +103,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'downforeveryoneorjustme.urls'
 
-TEMPLATE_DIRS = ('C:/django/downforeveryoneorjustme/templates',)
+TEMPLATE_DIRS = (here('templates'),)
 
 
 
