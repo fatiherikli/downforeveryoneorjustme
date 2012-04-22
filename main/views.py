@@ -7,8 +7,7 @@ from main.tasks import web_site_status
 def home(request):
     return render_to_response('home.html')
 
-def check(request):
-    url = 'http://%s' % request.GET.get('url','google.com')
-    job = web_site_status.delay(url)
-    status_code = job.get() # wait for response.
-    return HttpResponse(status_code)
+def check_direct(request):
+    url = request.GET.get('url','http://google.com')
+    status = web_site_status(url)
+    return HttpResponse(status)

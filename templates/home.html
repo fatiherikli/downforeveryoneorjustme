@@ -2,6 +2,8 @@
 {% block content %}
     <h1>Down for everyone or just me ?</h1>
     <form id="check" action="check">
+        click <a href="#" class='test'>here</a> for test data
+        <input type="checkbox" id="with-celery" checked="checked"> with celery !
         <input name="url" placeholder="type site name and press enter" type="text" id="url">
     </form>
     <ul id="result"></ul>
@@ -26,9 +28,8 @@
                             append(site_status).
                             appendTo('#result');
 
-                    // ajax request
-                    $.getJSON('check', { url : $('#url').val() }, function (response) {
-                        if (response == 200)
+                    var set_result = function (status_code) {
+                        if (status_code == 200)
                         {
                             site_status
                                     .html("it's just you.")
@@ -41,7 +42,28 @@
                                     .removeClass('wait')
                                     .addClass("for-everyone")
                         }
-                    });
+                    }
+
+                    // ajax request
+                    var with_celery =  $('#with-celery').attr('checked') == 'checked'
+                    $.getJSON( with_celery ? 'with-celery':'without-celery',
+                    {
+                        url : 'http://' + $('#url').val().replace('http://','')
+                    }, with_celery ? (function (response) {
+
+                        var task_id = response['task_id']
+                        var get_status = setInterval(function () {
+                            $.getJSON('status/' + task_id, function (status) {
+                                if (status.task.status == "SUCCESS") {
+
+                                    set_result(status.task.result)
+                                    clearInterval(get_status)
+
+                                }
+                            })
+                        }, 500)
+
+                    }) : set_result);
 
                     // clear input
                     $('#url').val('')
@@ -51,6 +73,45 @@
                     return false;
                 })
             })
+
+           /*
+           * TEST APP
+           * */
+           $('.test').click(function () {
+                $([
+                        'google.com',
+                        'pyist.net',
+                        'facebook.com',
+                        'fatiherikli.com',
+                        // 'bulunmayanbirsite.com',
+                        'python.org',
+                        'twitter.com',
+                        'myadslot.com',
+                        'jetbrains.com',
+                        'cnn.com',
+                        'milliyet.com.tr',
+                        'gazetevatan.com',
+                        'tacirnet.com.tr',
+                        'yceo.com.tr',
+                        'foursquare.com',
+                        'tumblr.com',
+                        'rabbitmq.com',
+                        'wikipedia.org',
+                        'celeryproject.org',
+                        'django.org.tr',
+                        'bing.com',
+                        'yandex.com',
+                        'gmail.com',
+                        'yahoo.com',
+                        'apple.com'
+
+                ]).each(function () {
+                    $('#url').val(this)
+                    $('form').submit()
+                })
+
+           })
+
         })(window.jQuery)
     </script>
 {% endblock %}

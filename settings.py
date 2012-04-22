@@ -106,8 +106,6 @@ ROOT_URLCONF = 'downforeveryoneorjustme.urls'
 TEMPLATE_DIRS = (here('templates'),)
 
 
-
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -120,7 +118,6 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'main',
-
     'djcelery',
 )
 
@@ -151,6 +148,21 @@ LOGGING = {
 
 import djcelery
 djcelery.setup_loader()
-#
-BROKER_URL = "amqp://myadslot.com:5672//"
-#CELERY_RESULT_BACKEND = "amqp"
+
+from datetime import timedelta
+
+CELERYBEAT_SCHEDULE = {
+    "runs-every-30-seconds": {
+        "task": "main.tasks.web_site_status",
+        "schedule": timedelta(seconds=10),
+        "args": ('http://google.com', )
+    },
+    }
+
+CELERY_RESULT_BACKEND = "mongodb"
+CELERY_MONGODB_BACKEND_SETTINGS = {
+    "host": "localhost",
+    "port": 27017,
+    "database": "mydb",
+    "taskmeta_collection": "my_taskmeta_collection",
+    }
