@@ -1,4 +1,8 @@
-downforeveryoneorjustme
-=======================
+Python Istanbul - Celery demo application
+=========================================
 
-Pyist - Celery demo
+demo;
+pyist-celery-demo.myadslot.com:8000
+
+slides;
+fatiherikli.com/pyist/pyist-celery.pdf
