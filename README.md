@@ -2,7 +2,7 @@ Python Istanbul - Celery demo application
 =========================================
 
 demo;
-pyist-celery-demo.myadslot.com:8000
+[http://pyist-celery-demo.myadslot.com:8000]
 
 slides;
-fatiherikli.com/pyist/pyist-celery.pdf
+[http://fatiherikli.com/pyist/pyist-celery.pdf]
